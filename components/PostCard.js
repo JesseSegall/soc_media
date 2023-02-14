@@ -4,6 +4,14 @@ import ClickOutHandler from 'react-clickout-handler';
 import { useState } from 'react';
 export default function PostCard() {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	function openDropdown(e) {
+		e.stopPropagation();
+		setDropdownOpen(true);
+	}
+	function handleClickOutsideDropdown(e) {
+		e.stopPropagation();
+		setDropdownOpen(false);
+	}
 	return (
 		<Card>
 			<div className='flex gap-3'>
@@ -18,8 +26,8 @@ export default function PostCard() {
 					</p>
 					<p className='text-gray-500 text-sm'>3 hours ago</p>
 				</div>
-				<div>
-					<button className='text-gray-400' onClick={() => setDropdownOpen(true)}>
+				<div className='relative'>
+					<button className='text-gray-400' onClick={openDropdown}>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							fill='none'
@@ -35,7 +43,9 @@ export default function PostCard() {
 							/>
 						</svg>
 					</button>
-					<ClickOutHandler onClickOut={() => {}}>
+					{dropdownOpen && <div className='bg-red w-5 h-5 absolute top-0'></div>}
+					<ClickOutHandler onClickOut={handleClickOutsideDropdown}>
+						{' '}
 						<div className='relative'>
 							{dropdownOpen && (
 								<div className='absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52'>
