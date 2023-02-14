@@ -1,4 +1,3 @@
-import Avatar from '@/components/Avatar';
 import Card from '@/components/Card';
 import NavigationCard from '@/components/NavigationCard';
 import PostFormCard from '@/components/PostFormCard';
