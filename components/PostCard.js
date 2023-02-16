@@ -2,6 +2,7 @@ import Avatar from './Avatar';
 import Card from './Card';
 import ClickOutHandler from 'react-clickout-handler';
 import { useState } from 'react';
+import Link from 'next/link';
 export default function PostCard() {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	function openDropdown(e) {
@@ -12,17 +13,25 @@ export default function PostCard() {
 		e.stopPropagation();
 		setDropdownOpen(false);
 	}
+	const nonActiveElementClasses =
+		'text-sm md:text-md flex gap-1 md:gap-3 py-2 my-2 hover:bg-socialBlue  hover:text-white md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300 items-center';
 	return (
 		<Card>
 			<div className='flex gap-3'>
 				<div>
-					<Avatar />
+					<Link href={'/profile'}>
+						<span className='cursor-pointer'>
+							<Avatar />
+						</span>
+					</Link>
 				</div>
 				<div className='grow'>
 					<p>
-						<a className='font-semibold'>
-							John Doe shared an <a className='text-socialBlue'>album</a>
-						</a>
+						<Link href={'/profile'}>
+							<span className='mr-1 font-semibold cursor-pointer hover:underline'>John Doe</span>
+						</Link>
+						shared an
+						<a className='text-socialBlue'> album</a>
 					</p>
 					<p className='text-gray-500 text-sm'>3 hours ago</p>
 				</div>
@@ -49,7 +58,7 @@ export default function PostCard() {
 						<div className='relative'>
 							{dropdownOpen && (
 								<div className='absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52'>
-									<a href='' className='flex py-2 px-2 gap-2'>
+									<a href='' className={nonActiveElementClasses}>
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
 											fill='none'
@@ -66,7 +75,7 @@ export default function PostCard() {
 										</svg>
 										Notifications On
 									</a>
-									<a href='' className='flex py-2 px-2 gap-2'>
+									<a href='' className={nonActiveElementClasses}>
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
 											fill='none'
@@ -83,7 +92,7 @@ export default function PostCard() {
 										</svg>
 										Save Post
 									</a>
-									<a href='' className='flex py-2 px-2 gap-2'>
+									<a href='' className={nonActiveElementClasses}>
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
 											fill='none'
@@ -100,7 +109,7 @@ export default function PostCard() {
 										</svg>
 										Hide Post
 									</a>
-									<a href='' className='flex py-2 px-2 gap-2'>
+									<a href='' className={nonActiveElementClasses}>
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
 											fill='none'
@@ -117,7 +126,7 @@ export default function PostCard() {
 										</svg>
 										Delete
 									</a>
-									<a href='' className='flex py-2 px-2 gap-2'>
+									<a href='' className={nonActiveElementClasses}>
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
 											fill='none'
@@ -142,7 +151,7 @@ export default function PostCard() {
 			</div>
 			<div>
 				<p className='my-3 text-sm'>
-					Here is a bunch of random text for some post some guy is making.He is then adding a photo
+					Here is a bunch of random text for some post some guy is making. He is then adding a photo
 					to the post.
 				</p>
 				<div className='rounded-md overflow-hidden'>
