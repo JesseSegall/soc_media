@@ -21,7 +21,7 @@ export default function PostCard() {
 				<div className='grow'>
 					<p>
 						<a className='font-semibold'>
-							John Doe shared a <a className='text-socialBlue'>album</a>
+							John Doe shared an <a className='text-socialBlue'>album</a>
 						</a>
 					</p>
 					<p className='text-gray-500 text-sm'>3 hours ago</p>
