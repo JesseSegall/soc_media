@@ -1,12 +1,22 @@
 import Avatar from '@/components/Avatar';
 import Card from '@/components/Card';
+import FriendInfo from '@/components/FriendInfo';
 import Layout from '@/components/Layout';
 import PostCard from '@/components/PostCard';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function ProfilePage() {
-	const profileClasses = 'flex gap-1 px-3 py-1 items-center ';
-	const demoClass =
+	const router = useRouter();
+	const { asPath: pathname } = router; // uses asPath to get proper route and renames to pathname
+
+	const isPosts = pathname.includes('posts') || pathname === '/profile';
+	const isAbout = pathname.includes('about');
+	const isFriends = pathname.includes('friends');
+	const isPhotos = pathname.includes('photos');
+
+	const tabClasses = 'flex gap-1 px-3 py-1 items-center border-b-4 border-b-white';
+	const activeTabClasses =
 		'flex gap-1 px-3 py-1 items-center border-socialBlue border-b-4 text-socialBlue';
 	return (
 		<Layout>
@@ -28,7 +38,7 @@ export default function ProfilePage() {
 							<div className='text-gray-500 leading-4'>New York, NY</div>
 						</div>
 						<div className='mt-10 flex gap-0'>
-							<Link href={'/'} className={demoClass}>
+							<Link href={'/profile/posts'} className={isPosts ? activeTabClasses : tabClasses}>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'
@@ -45,7 +55,7 @@ export default function ProfilePage() {
 								</svg>
 								Posts
 							</Link>
-							<Link href={'/'} className={profileClasses}>
+							<Link href={'/profile/about'} className={isAbout ? activeTabClasses : tabClasses}>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'
@@ -62,7 +72,7 @@ export default function ProfilePage() {
 								</svg>
 								About
 							</Link>
-							<Link href={'/'} className={profileClasses}>
+							<Link href={'/profile/friends'} className={isFriends ? activeTabClasses : tabClasses}>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'
@@ -79,7 +89,7 @@ export default function ProfilePage() {
 								</svg>
 								Friends
 							</Link>
-							<Link href={'/'} className={profileClasses}>
+							<Link href={'/profile/photos'} className={isPhotos ? activeTabClasses : tabClasses}>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'
@@ -100,7 +110,98 @@ export default function ProfilePage() {
 					</div>
 				</div>
 			</Card>
-			<PostCard />
+			{isPosts && (
+				<div>
+					<PostCard />
+				</div>
+			)}
+
+			{isAbout && (
+				<div>
+					<Card>
+						<h2 className='mb-2 text-2xl'>About Me</h2>
+						<p className='mb-2 text-sm'>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer placerat sapien
+							libero, ac viverra turpis bibendum vel. Cras semper lacinia est. Curabitur elementum
+							efficitur nibh. Sed dapibus lorem et erat sollicitudin, eu dictum elit ultricies.
+							Integer sagittis porta libero at condimentum. Etiam hendrerit ornare nisl. Proin
+							mollis, ante ut imperdiet pretium, magna lacus finibus nunc, fermentum viverra elit
+							leo quis neque. Nullam nec nunc sed risus lacinia luctus vel nec ante. Cras vehicula
+							est in congue mattis. Ut lorem metus, consectetur vitae magna at, vulputate fermentum
+							tellus.
+						</p>
+					</Card>
+				</div>
+			)}
+
+			{isFriends && (
+				<div>
+					<Card>
+						<h2>Friends</h2>
+						<div className=''>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+							<div className='border-b border-b-gray-100 p-4 -mx-4'>
+								<FriendInfo />
+							</div>
+						</div>
+					</Card>
+				</div>
+			)}
+
+			{isPhotos && (
+				<div>
+					<div>
+						<Card>
+							<div className='grid grid-cols-2 gap-4'>
+								<div className='rounded-md overflow-hidden h-48 items-center shadow-md'>
+									<img
+										src='https://plus.unsplash.com/premium_photo-1670333242665-30b397067c37?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60'
+										alt=''
+									/>
+								</div>
+								<div className='rounded-md overflow-hidden h-48 items-center shadow-md'>
+									<img
+										src='https://images.unsplash.com/photo-1676934834327-fe2e9fce4e1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2Mnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'
+										alt=''
+									/>
+								</div>
+								<div className='rounded-md overflow-hidden h-48 items-center shadow-md'>
+									<img
+										src='https://images.unsplash.com/photo-1676973440045-f1b8f5abe88f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzMHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'
+										alt=''
+									/>
+								</div>
+								<div className='rounded-md overflow-hidden h-48 items-center shadow-md'>
+									<img
+										src='https://images.unsplash.com/photo-1670617007161-b720c3eef493?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3MHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'
+										alt=''
+									/>
+								</div>
+							</div>
+						</Card>
+					</div>
+				</div>
+			)}
 		</Layout>
 	);
 }
