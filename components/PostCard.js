@@ -3,7 +3,7 @@ import Card from './Card';
 import ClickOutHandler from 'react-clickout-handler';
 import { useState } from 'react';
 import Link from 'next/link';
-export default function PostCard() {
+export default function PostCard({ content }) {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	function openDropdown(e) {
 		e.stopPropagation();
@@ -150,10 +150,7 @@ export default function PostCard() {
 				</div>
 			</div>
 			<div>
-				<p className='my-3 text-sm'>
-					Here is a bunch of random text for some post some guy is making. He is then adding a photo
-					to the post.
-				</p>
+				<p className='my-3 text-sm'>{content}</p>
 				<div className='rounded-md overflow-hidden'>
 					<img
 						src='https://images.unsplash.com/photo-1589909202802-8f4aadce1849?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
