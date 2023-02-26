@@ -1,10 +1,13 @@
 import Avatar from './Avatar';
 import Card from './Card';
 import ClickOutHandler from 'react-clickout-handler';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
-export default function PostCard({ content }) {
+import ReactTimeAgo from 'react-time-ago';
+import { UserContext } from '@/contexts/UserContext';
+export default function PostCard({ content, created_at, profiles: authorProfile }) {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const { profile: myProfile } = useContext(UserContext);
 	function openDropdown(e) {
 		e.stopPropagation();
 		setDropdownOpen(true);
@@ -21,19 +24,22 @@ export default function PostCard({ content }) {
 				<div>
 					<Link href={'/profile'}>
 						<span className='cursor-pointer'>
-							<Avatar />
+							<Avatar url={authorProfile.avatar} />
 						</span>
 					</Link>
 				</div>
 				<div className='grow'>
 					<p>
 						<Link href={'/profile'}>
-							<span className='mr-1 font-semibold cursor-pointer hover:underline'>John Doe</span>
+							<span className='mr-1 font-semibold cursor-pointer hover:underline'>
+								{authorProfile.name}
+							</span>
 						</Link>
-						shared an
-						<a className='text-socialBlue'> album</a>
+						shared a post
 					</p>
-					<p className='text-gray-500 text-sm'>3 hours ago</p>
+					<p className='text-gray-500 text-sm'>
+						<ReactTimeAgo date={created_at} />
+					</p>
 				</div>
 				<div className='relative'>
 					<button className='text-gray-400' onClick={openDropdown}>
@@ -213,7 +219,7 @@ export default function PostCard({ content }) {
 			</div>
 			<div className='flex mt-4 gap-3'>
 				<div>
-					<Avatar />
+					<Avatar url={myProfile?.avatar} />
 				</div>
 				<div className='border grow rounded-full relative'>
 					<textarea

@@ -1,24 +1,19 @@
+import { UserContext } from '@/contexts/UserContext';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
-import { useEffect, useState } from 'react';
+import { Result } from 'postcss';
+import { useContext, useEffect, useState } from 'react';
+import { ClipLoader } from 'react-spinners';
 import Avatar from './Avatar';
 import Card from './Card';
+import Preloader from './Preloader';
 
-export default function PostFormCard() {
+export default function PostFormCard({ onPost }) {
 	const supabase = useSupabaseClient();
 	const session = useSession();
-	const [profile, setProfile] = useState(null);
+	const [isUploading, setIsUploading] = useState(false);
+	const [uploads, setUploads] = useState([]);
 	const [content, setContent] = useState('');
-	useEffect(() => {
-		supabase
-			.from('profiles')
-			.select()
-			.eq('id', session.user.id)
-			.then((result) => {
-				if (result.data.length) {
-					setProfile(result.data[0]);
-				}
-			});
-	}, []);
+	const { profile } = useContext(UserContext);
 
 	// if (!profile) {
 	// 	return 'Waiting for profile  info..';
@@ -27,12 +22,38 @@ export default function PostFormCard() {
 	function createPost() {
 		supabase
 			.from('posts')
-			.insert({ author: session.user.id, content })
+			.insert({ author: session.user.id, content, photos: uploads })
 			.then((response) => {
 				if (!response.error) {
 					setContent('');
+					setUploads('');
+					if (onPost) {
+						onPost();
+					}
 				}
 			});
+	}
+
+	async function addPhotos(ev) {
+		const files = ev.target.files;
+		if (files.length > 0) {
+			setIsUploading(true);
+			for (const file of files) {
+				const newName = Date.now() + file.name;
+				const result = await supabase.storage.from('photos').upload(newName, file);
+
+				if (result.data) {
+					const url =
+						process.env.NEXT_PUBLIC_SUPABASE_URL +
+						'/storage/v1/object/public/photos/' +
+						result.data.path;
+					setUploads((prevUploads) => [...prevUploads, url]);
+				} else {
+					console.log(result);
+				}
+			}
+			setIsUploading(false);
+		}
 	}
 
 	return (
@@ -50,7 +71,42 @@ export default function PostFormCard() {
 					/>
 				)}
 			</div>
+			{isUploading && (
+				<div>
+					<Preloader />
+				</div>
+			)}
+			{uploads.length > 0 && (
+				<div className='flex gap-2'>
+					{uploads.map((upload) => (
+						<div key={upload.id} className='mt-2'>
+							<img src={upload} alt='' className='w-auto h-24 rounded-md' />
+						</div>
+					))}
+				</div>
+			)}
+
 			<div className='flex gap-5 items-center mt-2 '>
+				<div>
+					<label className='flex gap-1'>
+						<input type='file' className='hidden' multiple onChange={addPhotos} />
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							fill='none'
+							viewBox='0 0 24 24'
+							strokeWidth={1.5}
+							stroke='currentColor'
+							className='w-6 h-6'
+						>
+							<path
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								d='M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z'
+							/>
+						</svg>
+						<span className='hidden md:block'>Photos</span>
+					</label>
+				</div>
 				<div>
 					<button className='flex gap-1'>
 						<svg
