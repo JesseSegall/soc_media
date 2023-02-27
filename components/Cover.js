@@ -1,7 +1,7 @@
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
 import Preloader from './Preloader';
-//import { uploadUserProfileImage } from '../helpers/user';
+import { uploadUserProfileImage } from '../helper/user';
 
 export default function Cover({ url, editable, onChange }) {
 	const supabase = useSupabaseClient();
