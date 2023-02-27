@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import Link from 'next/link';
 import ReactTimeAgo from 'react-time-ago';
 import { UserContext } from '@/contexts/UserContext';
-export default function PostCard({ content, created_at, profiles: authorProfile }) {
+export default function PostCard({ content, created_at, photos, profiles: authorProfile }) {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const { profile: myProfile } = useContext(UserContext);
 	function openDropdown(e) {
@@ -30,7 +30,7 @@ export default function PostCard({ content, created_at, profiles: authorProfile 
 				</div>
 				<div className='grow'>
 					<p>
-						<Link href={'/profile'}>
+						<Link href={'/profile/' + authorProfile.id}>
 							<span className='mr-1 font-semibold cursor-pointer hover:underline'>
 								{authorProfile.name}
 							</span>
@@ -157,12 +157,15 @@ export default function PostCard({ content, created_at, profiles: authorProfile 
 			</div>
 			<div>
 				<p className='my-3 text-sm'>{content}</p>
-				<div className='rounded-md overflow-hidden'>
-					<img
-						src='https://images.unsplash.com/photo-1589909202802-8f4aadce1849?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
-						alt=''
-					/>
-				</div>
+				{photos?.length > 0 && (
+					<div className='flex gap-4'>
+						{photos.map((photo) => (
+							<div key={photo.id} className=''>
+								<img className='rounded-md' src={photo} alt='' />{' '}
+							</div>
+						))}
+					</div>
+				)}
 			</div>
 			<div className='mt-5 flex gap-6'>
 				<button className='flex items-center gap-1'>
