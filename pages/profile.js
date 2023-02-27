@@ -16,6 +16,16 @@ export default function ProfilePage() {
 	const userId = router.query.id;
 	const supabase = useSupabaseClient();
 	const session = useSession();
+
+	const isMyUser = userId === session?.user?.id;
+	const isPosts = pathname.includes('posts') || pathname === '/profile';
+	const isAbout = pathname.includes('about');
+	const isFriends = pathname.includes('friends');
+	const isPhotos = pathname.includes('photos');
+
+	const tabClasses = 'flex gap-1 px-4 py-1 items-center border-b-4 border-b-white';
+	const activeTabClasses =
+		'flex gap-1 px-4 py-1 items-center border-socialBlue border-b-4 text-socialBlue font-bold';
 	useEffect(() => {
 		if (!userId) {
 			return;
@@ -33,22 +43,29 @@ export default function ProfilePage() {
 				}
 			});
 	}, [userId]);
-	const isMyUser = userId === session?.user?.id;
-	const isPosts = pathname.includes('posts') || pathname === '/profile';
-	const isAbout = pathname.includes('about');
-	const isFriends = pathname.includes('friends');
-	const isPhotos = pathname.includes('photos');
 
-	const tabClasses = 'flex gap-1 px-4 py-1 items-center border-b-4 border-b-white';
-	const activeTabClasses =
-		'flex gap-1 px-4 py-1 items-center border-socialBlue border-b-4 text-socialBlue font-bold';
+	function fetchUser() {
+		supabase
+			.from('profiles')
+			.select()
+			.eq('id', userId)
+			.then((result) => {
+				if (result.error) {
+					throw result.error;
+				}
+				if (result.data) {
+					setProfile(result.data[0]);
+				}
+			});
+	}
+
 	return (
 		<Layout>
 			<Card noPadding={true}>
 				<div className='relative overflow-hidden rounded-md'>
-					<Cover url={profile?.cover} editable={isMyUser} />
+					<Cover url={profile?.cover} editable={isMyUser} onChange={fetchUser} />
 					<div className='absolute top-24 left-4'>
-						{profile && <Avatar url={profile.avatar} size={'lg'} />}
+						{profile && <Avatar url={profile.avatar} size={'lg'} onChange={fetchUser} />}
 					</div>
 
 					<div className='p-4 '>
