@@ -84,6 +84,7 @@ export default function PostCard({ id, content, created_at, photos, profiles: au
 
 	const isLikedByMe = !!likes.find((like) => like.user_id === myProfile?.id);
 
+	// Toggles likes on/off
 	function toggleLike() {
 		if (isLikedByMe) {
 			supabase
@@ -108,6 +109,7 @@ export default function PostCard({ id, content, created_at, photos, profiles: au
 	}
 
 	function postComment(ev) {
+		//To prevent default form behav
 		ev.preventDefault();
 		supabase
 			.from('posts')
@@ -117,7 +119,7 @@ export default function PostCard({ id, content, created_at, photos, profiles: au
 				parent: id,
 			})
 			.then((result) => {
-				console.log(result);
+				//console.log(result);
 				fetchComments();
 				setCommentText('');
 			});
@@ -129,15 +131,15 @@ export default function PostCard({ id, content, created_at, photos, profiles: au
 				<div>
 					<Link href={'/profile'}>
 						<span className='cursor-pointer'>
-							<Avatar url={authorProfile.avatar} />
+							<Avatar url={authorProfile?.avatar} />
 						</span>
 					</Link>
 				</div>
 				<div className='grow'>
 					<p>
-						<Link href={'/profile/' + authorProfile.id}>
+						<Link href={'/profile/' + authorProfile?.id}>
 							<span className='mr-1 font-semibold cursor-pointer hover:underline'>
-								{authorProfile.name}
+								{authorProfile?.name}
 							</span>
 						</Link>
 						shared a post
@@ -163,11 +165,11 @@ export default function PostCard({ id, content, created_at, photos, profiles: au
 							/>
 						</svg>
 					</button>
-					{dropdownOpen && <div className='bg-red w-5 h-5 absolute top-0'></div>}
+					{dropdownOpen && <div className='bg-red w-5 h-5 absolute top-0 '></div>}
 					<ClickOutHandler onClickOut={handleClickOutsideDropdown}>
 						<div className='relative'>
 							{dropdownOpen && (
-								<div className='absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52'>
+								<div className='absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52 z-50'>
 									<button onClick={toggleSave} className='w-full -my-2'>
 										<span className='flex -mx-4 hover:shadow-md gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white px-4 rounded-md transition-all hover:scale-110 shadow-gray-300'>
 											{isSaved && (
@@ -356,12 +358,12 @@ export default function PostCard({ id, content, created_at, photos, profiles: au
 				<div>
 					<Avatar url={myProfile?.avatar} />
 				</div>
-				<div className='border grow rounded-full relative'>
+				<div className='border grow rounded-full relative '>
 					<form onSubmit={postComment}>
 						<input
 							value={commentText}
 							onChange={(ev) => setCommentText(ev.target.value)}
-							className='block w-full p-3 px-4 overflow-hidden h-12 rounded-full'
+							className='block w-full p-3 px-4 overflow-hidden h-12 rounded-full relative'
 							placeholder='Leave a comment'
 						/>
 					</form>
@@ -384,7 +386,7 @@ export default function PostCard({ id, content, created_at, photos, profiles: au
 				</div>
 			</div>
 			<div>
-				{comments?.length > 0 &&
+				{comments.length > 0 &&
 					comments.map((comment) => (
 						<div key={comment.id} className='mt-2 flex gap-2 items-center'>
 							<Avatar url={comment.profiles.avatar} />
