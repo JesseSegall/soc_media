@@ -1,11 +1,11 @@
 import Avatar from '@/components/Avatar';
 import Card from '@/components/Card';
 import Cover from '@/components/Cover';
-import FriendInfo from '@/components/FriendInfo';
+
 import Layout from '@/components/Layout';
-import PostCard from '@/components/PostCard';
+
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
-import Link from 'next/link';
+
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import ProfileTabs from '../components/ProfileTabs';
@@ -15,17 +15,15 @@ import { UserContextProvider } from '@/contexts/UserContext';
 export default function ProfilePage() {
 	const [profile, setProfile] = useState(null);
 	const [editMode, setEditMode] = useState(false);
+	const [name, setName] = useState('');
+	const [place, setPlace] = useState('');
 	const router = useRouter();
-
 	const userId = router.query.id;
 	const supabase = useSupabaseClient();
 	const session = useSession();
 	const tab = router?.query?.tab?.[0] || 'posts';
 	const isMyUser = userId === session?.user?.id;
 
-	const tabClasses = 'flex gap-1 px-4 py-1 items-center border-b-4 border-b-white';
-	const activeTabClasses =
-		'flex gap-1 px-4 py-1 items-center border-socialBlue border-b-4 text-socialBlue font-bold';
 	useEffect(() => {
 		if (!userId) {
 			return;
@@ -65,7 +63,7 @@ export default function ProfilePage() {
 			.update({ name, place })
 			.eq('id', session.user.id)
 			.then((result) => {
-				if (result.error) {
+				if (!result.error) {
 					setProfile((prev) => ({ ...prev, name, place }));
 				}
 				setEditMode(false);
@@ -119,8 +117,8 @@ export default function ProfilePage() {
 											<button
 												onClick={() => {
 													setEditMode(true);
-													setName(profile.name);
-													setPlace(profile.place);
+													setName(profile?.name);
+													setPlace(profile?.place);
 												}}
 												className='inline-flex mx-1 gap-1 bg-white rounded-md shadow-sm shadow-gray-500 py-1 px-2'
 											>
