@@ -1,5 +1,8 @@
-This is a social media/ blog web application that allows users to create accounts using Oauth via Google, Discord, or Github. They can then post a story and other users can save the post, like it, and comment. Profiles can be customized with a header photo, avatar photo, as well as a photos section.
+Introducing a user-friendly social media and blog web application, developed using React, Twailwind CSS, and Supabase. Our platform allows users to easily create accounts using OAuth via Google, Discord, or GitHub, and quickly become part of the community.
 
+Once registered, users can post stories and engage with others by saving, liking, or commenting on their posts. Our application also offers profile customization options, including header photos, avatar images, and a dedicated photos section.
+
+Experience a simple yet engaging social media and blog platform that fosters connection and self-expression.
 ## Getting Started
 
 First, run the development server:
