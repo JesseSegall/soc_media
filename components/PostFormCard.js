@@ -126,7 +126,7 @@ export default function PostFormCard({ onPost }) {
 						<span className='hidden md:block'>People</span>
 					</button>
 				</div>
-				<div>
+				{/* <div>
 					<button className='flex gap-1'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
@@ -149,8 +149,8 @@ export default function PostFormCard({ onPost }) {
 						</svg>
 						<span className='hidden md:block'>Check in</span>
 					</button>
-				</div>
-				<div>
+				</div> */}
+				{/* <div>
 					<button className='flex gap-1'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
@@ -168,7 +168,7 @@ export default function PostFormCard({ onPost }) {
 						</svg>
 						<span className='hidden md:block'>Mood</span>
 					</button>
-				</div>
+				</div> */}
 				<div className='grow text-right'>
 					<button onClick={createPost} className='bg-socialBlue text-white px-6 py-1 rounded-md'>
 						Share
