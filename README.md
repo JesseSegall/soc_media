@@ -1,5 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Introducing a user-friendly social media and blog web application, developed using React, Twailwind CSS, and Supabase. Our platform allows users to easily create accounts using OAuth via Google, Discord, or GitHub, and quickly become part of the community.
 
+Once registered, users can post stories and engage with others by saving, liking, or commenting on their posts. Our application also offers profile customization options, including header photos, avatar images, and a dedicated photos section.
+
+Experience a simple yet engaging social media and blog platform that fosters connection and self-expression.
 ## Getting Started
 
 First, run the development server:
@@ -14,25 +17,12 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+![image](https://user-images.githubusercontent.com/98127581/226750886-a3832d4b-303e-4656-a6fd-ea5f907777d7.png)
+![image](https://user-images.githubusercontent.com/98127581/226751036-47cd6926-3f2a-4b6a-a0a3-c0225b25be62.png)
+![image](https://user-images.githubusercontent.com/98127581/226751138-49342011-d03a-4a05-bd1d-b59fa2fa357f.png)
+![image](https://user-images.githubusercontent.com/98127581/226751201-7f554504-8742-4487-9401-8c4835cbd80b.png)
+![image](https://user-images.githubusercontent.com/98127581/226751256-ec2ec6d8-1001-40ae-9d84-aa1dd657272c.png)
+![image](https://user-images.githubusercontent.com/98127581/226751328-1bf6cb52-d5d0-4f1e-9345-c9691ec5d11f.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
